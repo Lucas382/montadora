@@ -1,21 +1,25 @@
 <?php
+require_once './Motor/interfaceMotor.php';
 
 /**
  * Classe base para carros
  * @author Lucas
  * 
  */
-class Carro
+abstract class Carro
 {
-    public $cor;
+    private $potencia = 1.0;
     private $peso = 1000;
+    
+    public $cor;
     private $combustivel = "Gasolina";
     private $qtdCombustivel = 0;
     private $velocidade = 0;
     private $kilometragem = 0;
-    private $potencia = 1.0;
-    private $ligado = false;
+    
     private $direcao = "centro";
+    
+    private $motor;
     
     
     /**
@@ -23,10 +27,11 @@ class Carro
      * @param String $cor
      * 
      */
-    public function __construct($cor = "Branco") 
+    public function __construct($cor = "Branco", InterfaceMotor $motor) 
     {
-        $this->cor = $cor;
         
+        $this->cor = $cor;
+        $this->motor= $motor;
         
     }
     
@@ -37,7 +42,7 @@ class Carro
     {
         if($this->qtdCombustivel > 0)
         {
-            $this->ligado = true;
+            $this->motor->ligar();
         }
         
     }
@@ -48,7 +53,7 @@ class Carro
     public function desligar()
     {
         
-        $this->ligado = false;
+        $this->motor->desligar();
     }
     
     /**
